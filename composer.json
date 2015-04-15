@@ -6,6 +6,7 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "5.0.*",
+		"guzzlehttp/guzzle": "~5.2.0",
 		"league/flysystem-aws-s3-v2": "~1.0"
 	},
 	"require-dev": {

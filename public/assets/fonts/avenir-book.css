@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'AvenirRegular';
+    src: url('avenir-book.eot');
+    src: url('avenir-book.eot') format('embedded-opentype'),
+         url('avenir-book.woff') format('woff'),
+         url('avenir-book.ttf') format('truetype'),
+         url('avenir-book.svg#AvenirRegular') format('svg');
+}

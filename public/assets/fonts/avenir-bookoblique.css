@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'AvenirItalic';
+    src: url('avenir-bookoblique.eot');
+    src: url('avenir-bookoblique.eot') format('embedded-opentype'),
+         url('avenir-bookoblique.woff') format('woff'),
+         url('avenir-bookoblique.ttf') format('truetype'),
+         url('avenir-bookoblique.svg#AvenirItalic') format('svg');
+}

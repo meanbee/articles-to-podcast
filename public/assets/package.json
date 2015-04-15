@@ -1,0 +1,19 @@
+{
+  "name": "article-to-podcast-assets",
+  "description": "Assets for Articles to Podcast",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "gulp-concat": "^2.4.1",
+    "gulp-plumber": "^0.6.5"
+  },
+  "dependencies": {
+    "gulp-imagemin": "^1.0.0",
+    "gulp-minify-css": "^0.3.7",
+    "gulp-sass": "^1.3.3",
+    "gulp-uglify": "^0.3.1",
+    "node-bourbon": "^1.2.3",
+    "node-neat": "^1.3.0",
+    "normalize.css": "^3.0.1"
+  }
+}

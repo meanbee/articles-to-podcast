@@ -19,7 +19,7 @@
     <meta name="description" content="@yield('description')" />
     <title>@yield('title') - Articles to Podcast Converter</title>
 
-    {{--<link rel="stylesheet" href="{{ asset('assets/css/styles.css'); }}" media="all">--}}
+{{--    <link rel="stylesheet" href="{{ asset('assets/css/styles.css'); }}" media="all">--}}
 
     <link rel="canonical" href="<?php echo URL::current() ?>" />
 
@@ -40,8 +40,8 @@
         <div class="header-inner">
 
             <ul class="account-links">
-                <li><a href="">Log in</a></li>
-                <li><a href="">Sign up</a></li>
+                <li><a href="{{ route('account.dashboard') }}">Log in</a></li>
+                <li><a href="{{ route('account.register') }}">Sign up</a></li>
             </ul>
 
             <a class="logo" href="{{ URL::to('') }}"><h1>Article to Podcast Converter</h1></a>

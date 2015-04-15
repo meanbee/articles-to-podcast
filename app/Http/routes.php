@@ -13,9 +13,10 @@
 
 Route::get('/', ['as' => 'cms.home', 'uses' => 'CmsController@index']);
 Route::get('/about', ['as' => 'cms.about', 'uses' => 'CmsController@about']);
+Route::get('/register', ['as' => 'account.register', 'uses' => 'Auth\AuthController@getRegister']);
 
 
-Route::get('dashboard', 'DashboardController@index');
+Route::get('dashboard', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

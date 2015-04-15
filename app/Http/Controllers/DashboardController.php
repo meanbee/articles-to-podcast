@@ -1,10 +1,10 @@
 <?php namespace App\Http\Controllers;
 
-class HomeController extends Controller {
+class DashboardController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Home Controller
+	| Dashboard Controller
 	|--------------------------------------------------------------------------
 	|
 	| This controller renders your application's "dashboard" for users that
@@ -30,7 +30,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		return view('dashboard');
 	}
 
 }

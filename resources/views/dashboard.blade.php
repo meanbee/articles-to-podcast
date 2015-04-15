@@ -9,6 +9,10 @@
 
 				<div class="panel-body">
 					You are logged in!
+
+					<p>
+						Your podcast URL is: <tt>{{ route('podcast', array('id' => $user->id, 'secret' => $user->secret())) }}</tt>.
+					</p>
 				</div>
 			</div>
 		</div>

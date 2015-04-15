@@ -5,7 +5,7 @@
     <h2>Dashboard</h2>
 
 	<p>
-		Your podcast URL is: <tt>{{ route('podcast', array('id' => $user->id, 'secret' => $user->secret())) }}</tt>.
+		To subscribe to your podcast, <a href="{{ str_replace('http://', 'itpc://', route('podcast', array('id' => $user->id, 'secret' => $user->secret()))) }}">click here</a>.
 	</p>
 </section>
 @endsection

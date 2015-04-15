@@ -18,6 +18,8 @@ Route::get('/register', ['as' => 'account.register', 'uses' => 'Auth\AuthControl
 
 Route::get('dashboard', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
 
+Route::get('podcast/{id}/{secret}', ['as' => 'podcast', 'uses' => 'FeedController@podcast']);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'CmsController@index');
+Route::get('/', ['as' => 'cms.home', 'uses' => 'CmsController@index']);
+Route::get('/about', ['as' => 'cms.about', 'uses' => 'CmsController@about']);
+
 
 Route::get('dashboard', 'DashboardController@index');
 

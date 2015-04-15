@@ -1,47 +1,11 @@
-<html>
-<head>
-    <title>Articles to Podcast</title>
+@extends('layouts.master')
 
-    <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+@section('title', 'Home')
+@section('description', 'Converter to create mp3 podcasts to subcribe in itunes for your articles.')
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            color: #B0BEC5;
-            display: table;
-            font-weight: 100;
-            font-family: 'Lato';
-        }
+@section('content')
+<p>Try it now</p>
+@stop
+@section('before_body_end')
 
-        .container {
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .content {
-            text-align: center;
-            display: inline-block;
-        }
-
-        .title {
-            font-size: 96px;
-            margin-bottom: 40px;
-        }
-
-        .quote {
-            font-size: 24px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="content">
-            <div class="title">Convert your articles to podcasts</div>
-        </div>
-    </div>
-</body>
-</html>
+@stop

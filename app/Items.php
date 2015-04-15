@@ -12,6 +12,8 @@ class Items extends Model {
 	const STATUS_BEING_UPLOADED  = 'being_uploaded';
 	const STATUS_UPLOADED        = 'uploaded';
 
+	public $timestamps = false;
+
 	//
 
 }

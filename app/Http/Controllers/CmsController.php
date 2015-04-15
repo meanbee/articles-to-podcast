@@ -22,4 +22,14 @@ class CmsController extends Controller {
 		return view('cms.home');
 	}
 
+    /**
+     * About Page
+     *
+     * @return \Illuminate\View\View
+     */
+    public function about()
+    {
+        return view('cms.about');
+    }
+
 }

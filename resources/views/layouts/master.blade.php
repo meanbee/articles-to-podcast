@@ -19,7 +19,7 @@
     <meta name="description" content="@yield('description')" />
     <title>@yield('title') - Articles to Podcast Converter</title>
 
-{{--    <link rel="stylesheet" href="{{ asset('assets/css/styles.css'); }}" media="all">--}}
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" media="all">
 
     <link rel="canonical" href="<?php echo URL::current() ?>" />
 
@@ -40,8 +40,13 @@
         <div class="header-inner">
 
             <ul class="account-links">
-                <li><a href="{{ route('account.dashboard') }}">Log in</a></li>
-                <li><a href="{{ route('account.register') }}">Sign up</a></li>
+                @if( Auth::check() )
+                    <li><a href="{{ route('account.dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ route('account.logout') }}">Logout</a></li>
+                @else
+                    <li><a href="{{ route('account.dashboard') }}">Log in</a></li>
+                    <li><a href="{{ route('account.register') }}">Sign up</a></li>
+                @endif
             </ul>
 
             <a class="logo" href="{{ URL::to('') }}"><h1>Article to Podcast Converter</h1></a>
@@ -72,10 +77,6 @@
     <footer role="contentinfo">
         <div class="footer-inner">
             <p>Created by <a href="http://tgerulaitis.com/">Tomas Gerulaitis</a>, <a href="https://www.ashsmith.io/">Ash Smith</a>, <a href="https://www.nicksays.co.uk/">Nick Jones</a> &amp; <a href="http://tomrobertshaw.net/">Tom Robertshaw</a></p>
-            <div class="footer-end">
-                <p class="copyright">&copy; <?php echo date('Y') ?> Articles to Podcast Converter</p>
-            </div>
-
         </div>
     </footer>
     <script type="text/javascript" src="{{ asset('assets/js/main.min.js') }}"></script>

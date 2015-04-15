@@ -1,3 +1,4 @@
 /vendor
 /node_modules
 .env
+/public/assets/node_modules

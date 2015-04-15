@@ -16,7 +16,11 @@ Route::get('/about', ['as' => 'cms.about', 'uses' => 'CmsController@about']);
 Route::get('/register', ['as' => 'account.register', 'uses' => 'Auth\AuthController@getRegister']);
 
 
-Route::get('dashboard', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
+
+Route::get('/dashboard', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
+Route::get('/home', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
+Route::get('/logout', ['as' => 'account.logout', 'uses' => 'Auth\AuthController@getLogout']);
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

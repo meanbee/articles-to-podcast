@@ -8,7 +8,7 @@
 				<div class="panel-heading">Home</div>
 
 				<div class="panel-body">
-					You are logged in!
+					You are logged in! <a href="{{ URL::route('items.create') }}">Add a new Article</a>
 				</div>
 			</div>
 		</div>

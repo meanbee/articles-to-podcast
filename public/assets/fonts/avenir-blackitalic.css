@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'AvenirBlackItalic2';
+    src: url('avenir-blackitalic2.eot');
+    src: url('avenir-blackitalic2.eot') format('embedded-opentype'),
+         url('avenir-blackitalic2.woff') format('woff'),
+         url('avenir-blackitalic2.ttf') format('truetype'),
+         url('avenir-blackitalic2.svg#AvenirBlackItalic2') format('svg');
+}

@@ -1,0 +1,144 @@
+header[role="banner"] {
+    border-bottom: 2px solid $backgroundGreyBorder;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .account-links {
+
+        display: inline-block;
+        font-family: $avenirBlack;
+        font-size: em(13);
+        margin: em(8) 0;
+        text-transform: uppercase;
+
+        li {
+            border-right: 1px solid $blue;
+            display: inline-block;
+            padding: em(0) em(16) em(0) em(8);
+
+            &:last-of-type {
+                border: 0;
+                padding-right: 0;
+            }
+
+            &:first-of-type {
+                padding-left: 0;
+            }
+        }
+
+        a {
+            color: $blue;
+        }
+    }
+
+    nav[role="navigation"] {
+
+        font-family: $avenirMedium;
+        font-size: em(13);
+        text-transform: uppercase;
+        text-align: center;
+
+        li {
+            display: inline-block;
+            padding: 0.5em 1em;
+        }
+
+        @include modular-bp(em(800)) {
+
+            li {
+                padding: 0.5em 2em;
+
+            }
+        }
+    }
+}
+
+.main-inner,
+.header-inner,
+.footer-inner {
+    @include outer-container();
+
+    padding: em(16);
+    padding-bottom: 0;
+}
+
+.main-inner {
+    margin-bottom: 4em;
+    text-align: justify;
+}
+
+footer[role="contentinfo"] {
+    background: $yellowGrey;
+    color: $darkGrey;
+    min-height: em(140);
+
+    h4 {
+        color: $white;
+    }
+
+    [type="submit"] {
+        padding: 0.5em;
+
+        &:hover {
+            background: $white;
+            color: $blue;
+        }
+    }
+
+    [type="text"],
+    [type="email"] {
+        padding: 0.4em 0.2em 0.3em;
+    }
+
+}
+
+%grid {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+}
+
+%grid-two {
+    @extend %grid;
+    @include span-columns(6 of 12);
+}
+
+%grid-three {
+    @extend %grid;
+    @include span-columns(4 of 12);
+}
+
+%grid-four {
+
+    li li {
+        width: 100%;
+    }
+
+    @include modular-bp(em(400)) {
+        li {
+            @include span-columns(6 of 12);
+            @include omega(2n);
+        }
+
+    }
+
+    @include modular-bp(em(700)) {
+        li {
+            @include span-columns(4 of 12);
+            @include omega-reset(2n);
+            @include omega(3n);
+        }
+    }
+
+    @include modular-bp(em(900)) {
+        li {
+            @include span-columns(3 of 12);
+            @include omega-reset(3n);
+            @include omega(4n);
+        }
+    }
+}

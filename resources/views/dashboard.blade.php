@@ -1,17 +1,14 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
+<section class="main-inner">
+    <h2>Dashboard</h2>
 
-				<div class="panel-body">
-					You are logged in! <a href="{{ URL::route('items.create') }}">Add a new Article</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+	<p>
+		To subscribe to your podcast, <a href="{{ str_replace('http://', 'itpc://', route('podcast', array('id' => $user->id, 'secret' => $user->secret()))) }}">click here</a>.
+	</p>
+    <p>
+        To add a new article <a href="{{ URL::route('items.create') }}">click here</a>
+    </p>
+</section>
 @endsection

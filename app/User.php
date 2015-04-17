@@ -36,4 +36,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\UserItems');
     }
 
+	public function secret()
+	{
+		return sha1($this->email . $this->id . env('APP_KEY'));
+	}
 }

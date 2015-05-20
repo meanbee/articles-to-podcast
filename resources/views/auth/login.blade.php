@@ -14,6 +14,8 @@
         </div>
     @endif
 
+    <a href="{{ url('/pocket/login') }}" class="pocket-login">Login with<span class="pocket-logo">Pocket</span></a>
+
     <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

@@ -24,6 +24,9 @@ Route::get('/logout', ['as' => 'account.logout', 'uses' => 'Auth\AuthController@
 
 Route::get('podcast/{id}/{secret}', ['as' => 'podcast', 'uses' => 'FeedController@podcast']);
 
+Route::get('pocket/login', ['as' => 'pocket.login', 'uses' => 'PocketController@login']);
+Route::get('pocket/response', ['as' => 'pocket.response', 'uses' => 'PocketController@response']);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

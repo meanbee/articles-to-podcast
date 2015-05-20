@@ -2,6 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Items;
+use App\UserItems;
 use Goose\Client as GooseClient;
 use Illuminate\Http\Request;
 use \GuzzleHttp\Exception\RequestException;
@@ -46,7 +48,7 @@ class ItemsController extends Controller
         $url = $request->get('url');
 
         // Find the main item, or create it.
-        $item = \App\Items::find(md5($url));
+        $item = Items::find(md5($url));
         if ($item == null) {
             try {
                 $item = $this->createItem($url);
@@ -57,9 +59,9 @@ class ItemsController extends Controller
         }
 
         // create our user item if it doesn't exist.
-        $user_item = \App\UserItems::find(md5($url));
+        $user_item = UserItems::find(md5($url));
         if ($user_item == null) {
-            $user_item = new \App\UserItems();
+            $user_item = new UserItems();
             $user_item->user_id = $this->user()->id;
             $user_item->item_id = $item->id;
             $user_item->save();
@@ -69,15 +71,15 @@ class ItemsController extends Controller
 
     protected function createItem($url)
     {
-
         $goose = new GooseClient();
         $article = $goose->extractContent($url);
         $articleText = $article->getCleanedArticleText();
 
-        $item = new \App\Items();
+        $item = new Items();
         $item->id = md5($url);
         $item->url = $url;
         $item->content = $articleText;
+        $item->status = Items::STATUS_FETCHED;
         $item->save();
 
         return $item;

@@ -13,23 +13,15 @@
 
 Route::get('/', ['as' => 'cms.home', 'uses' => 'CmsController@index']);
 Route::get('/about', ['as' => 'cms.about', 'uses' => 'CmsController@about']);
-Route::get('/register', ['as' => 'account.register', 'uses' => 'Auth\AuthController@getRegister']);
-
-
 
 Route::get('/dashboard', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
 Route::get('/home', ['as' => 'account.dashboard', 'uses' => 'DashboardController@index']);
-Route::get('/logout', ['as' => 'account.logout', 'uses' => 'Auth\AuthController@getLogout']);
+Route::get('/logout', ['as' => 'account.logout', 'uses' => 'PocketController@logout']);
 
 
 Route::get('podcast/{id}/{secret}', ['as' => 'podcast', 'uses' => 'FeedController@podcast']);
 
 Route::get('pocket/login', ['as' => 'pocket.login', 'uses' => 'PocketController@login']);
-Route::get('pocket/response', ['as' => 'pocket.response', 'uses' => 'PocketController@response']);
-
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+Route::get('pocket/login/response', ['as' => 'pocket.response', 'uses' => 'PocketController@loginResponse']);
 
 Route::resource('items', 'ItemsController');

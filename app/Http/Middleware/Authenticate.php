@@ -1,27 +1,19 @@
 <?php namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use App\Auth;
 
 class Authenticate {
 
-	/**
-	 * The Guard implementation.
-	 *
-	 * @var Guard
-	 */
-	protected $auth;
+    /**
+     * The auth instance.
+     */
+    protected $auth;
 
-	/**
-	 * Create a new filter instance.
-	 *
-	 * @param  Guard  $auth
-	 * @return void
-	 */
-	public function __construct(Guard $auth)
-	{
-		$this->auth = $auth;
-	}
+    public function __construct(Auth $auth)
+    {
+        $this->auth = $auth;
+    }
 
 	/**
 	 * Handle an incoming request.
@@ -32,7 +24,7 @@ class Authenticate {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->guest())
+		if (!$this->auth->check())
 		{
 			if ($request->ajax())
 			{
@@ -40,7 +32,8 @@ class Authenticate {
 			}
 			else
 			{
-				return redirect()->guest('auth/login');
+                Session::put('error', 'Please login to reach this page.');
+				return redirect('/');
 			}
 		}
 

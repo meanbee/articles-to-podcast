@@ -40,12 +40,9 @@
         <div class="header-inner">
 
             <ul class="account-links">
-                @if( Auth::check() )
+                @if( $auth->check() )
                     <li><a href="{{ route('account.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('account.logout') }}">Logout</a></li>
-                @else
-                    <li><a href="{{ route('account.dashboard') }}">Log in</a></li>
-                    <li><a href="{{ route('account.register') }}">Sign up</a></li>
                 @endif
             </ul>
 

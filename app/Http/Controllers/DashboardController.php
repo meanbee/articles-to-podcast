@@ -1,26 +1,12 @@
 <?php namespace App\Http\Controllers;
 
-class DashboardController extends Controller {
+class DashboardController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Dashboard Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders your application's "dashboard" for users that
-	| are authenticated. Of course, you are free to change or remove the
-	| controller as you wish. It is just here to get your app started!
-	|
-	*/
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
 	public function __construct()
 	{
 		$this->middleware('auth');
+
+        parent::__construct();
 	}
 
 	/**
@@ -31,7 +17,7 @@ class DashboardController extends Controller {
 	public function index()
 	{
 		return view('dashboard', array(
-			'user' => \Auth::user()
+			'user' => $this->auth->getUser()
 		));
 	}
 

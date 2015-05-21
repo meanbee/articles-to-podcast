@@ -3,7 +3,7 @@
 use App\Items;
 use App\User;
 
-class FeedController extends Controller {
+class FeedController extends BaseController {
 
     /**
      * @return Response

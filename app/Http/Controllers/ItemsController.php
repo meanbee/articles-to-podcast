@@ -8,19 +8,19 @@ use Goose\Client as GooseClient;
 use Illuminate\Http\Request;
 use \GuzzleHttp\Exception\RequestException;
 
-class ItemsController extends Controller
+class ItemsController extends BaseController
 {
 
     public function __construct()
     {
         $this->middleware('auth');
+
+        parent::__construct();
     }
 
     public function index()
     {
-
         $items = $this->user()->items()->get();
-//        var_dump($items);die();
         return view('items.index', compact('items'));
     }
 

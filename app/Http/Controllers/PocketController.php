@@ -3,8 +3,9 @@
 use Session;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
-class PocketController extends Controller {
+class PocketController extends BaseController {
 
     const POCKET_REQUEST   = 'https://getpocket.com/v3/oauth/request';
     const POCKET_AUTHORIZE = 'https://getpocket.com/auth/authorize';
@@ -13,9 +14,10 @@ class PocketController extends Controller {
     const POCKET_SESSION_USERNAME = 'pocket_username';
     const POCKET_SESSION_ACCESS_TOKEN = 'pocket_access_token';
 
+
     public function __construct()
     {
-        $this->middleware('guest');
+        parent::__construct();
     }
 
     public function login()
@@ -28,7 +30,7 @@ class PocketController extends Controller {
                 'headers' => ['X-Accept' => 'application/json'],
                 'body' => [
                     'consumer_key' => env('POCKET_API'),
-                    'redirect_uri' => action('PocketController@response')
+                    'redirect_uri' => action('PocketController@loginResponse')
                 ]
             ]);
         } catch (RequestException $e) {
@@ -62,14 +64,15 @@ class PocketController extends Controller {
         $params = http_build_query(
             array(
                 'request_token' => $json['code'],
-                'redirect_uri' => action('PocketController@response')
+                'redirect_uri' => action('PocketController@loginResponse')
             )
         );
 
         return redirect(self::POCKET_AUTHORIZE . '?' . $params);
     }
 
-    public function response() {
+    public function loginResponse() {
+
         $client = new Client;
 
         try {
@@ -103,9 +106,18 @@ class PocketController extends Controller {
 
         $json = $response->json();
 
-        Session::put(self::POCKET_SESSION_USERNAME, $json['username']);
-        Session::put(self::POCKET_SESSION_ACCESS_TOKEN, $json['access_token']);
+        $this->auth->login($json['username'], $json['access_token']);
 
+        return redirect('/dashboard');
+    }
+
+    /**
+     * Logout by resetting session and redirecting to home
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logout() {
+        $this->auth->logout();
         return redirect('/');
     }
 }

@@ -1,16 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-class CmsController extends Controller {
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('guest');
-	}
+class CmsController extends BaseController {
 
 	/**
 	 * Show Home Screen

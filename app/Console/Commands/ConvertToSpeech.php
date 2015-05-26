@@ -1,6 +1,7 @@
 <?php namespace App\Console\Commands;
 
 use App\Items;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Input\InputOption;
@@ -25,7 +26,7 @@ class ConvertToSpeech extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Convert article text to mp3 files.';
+	protected $description = 'Convert article text to ogg files using IBM Watson.';
 
     /**
      * @var \GuzzleHttp\Client $httpClient
@@ -59,11 +60,18 @@ class ConvertToSpeech extends Command {
 
                     printf("Converting content of '%s'...", $item->url);
 
-                    $response = $this->getHttpClient()->post("", array(
-                        "body" => array(
-                            "q" => $item->content
-                        )
-                    ));
+                    try {
+                        $response = $this->getHttpClient()->post("", array(
+                            "body" => array(
+                                "q" => $item->content
+                            )
+                        ));
+                    } catch (ClientException $e) {
+                        $item->status = Items::STATUS_CONVERSION_FAILED;
+                        $item->save();
+                        continue;
+                    }
+
 
                     if (substr($response->getStatusCode(), 0, 1) == "2") {
                         $filename = sprintf(static::FILENAME_FORMAT, $item->id);
@@ -73,12 +81,16 @@ class ConvertToSpeech extends Command {
                             $response->getBody()
                         );
 
-                        printf("Done (%s).\n", $filename);
-
                         $item->status = Items::STATUS_CONVERTED;
                         $item->save();
+
+                        printf("Done (%s).\n", $filename);
+
                     } else {
                         printf("Failed!\n");
+                        
+                        $item->status = tems::STATUS_CONVERSION_FAILED;
+                        $item->save();
                     }
                 }
             });

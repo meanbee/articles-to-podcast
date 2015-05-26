@@ -10,9 +10,10 @@ use Symfony\Component\Console\Input\InputArgument;
 class ConvertToSpeech extends Command {
 
 
-    const TTS_URI = "http://tts-api.com/tts.mp3";
+    const TTS_URI = "https://stream.watsonplatform.net/text-to-speech-beta/api/";
 
-    const FILENAME_FORMAT = "%s.mp3";
+    const FILENAME_FORMAT_OGG = "%s.ogg";
+    const FILENAME_FORMAT_MP3 = "%s.mp3";
 
 	/**
 	 * The console command name.
@@ -58,15 +59,24 @@ class ConvertToSpeech extends Command {
                     $item->status = Items::STATUS_BEING_CONVERTED;
                     $item->save();
 
-                    printf("Converting content of '%s'...", $item->url);
+                    $this->info(sprintf("Converting content of '%s'...", $item->url));
 
                     try {
-                        $response = $this->getHttpClient()->post("", array(
-                            "body" => array(
-                                "q" => $item->content
+                        $response = $this->getHttpClient()->post("v1/synthesize", array(
+                            "headers" => array(
+                                'Authorization' => 'Basic ' . base64_encode(env('WATSON_TTS_USERNAME') . ':' . env('WATSON_TTS_PASSWORD')),
+                                'Content-Type'  => 'application/json',
+                                'Accept'        => 'audio/ogg; codecs=opus'
+                            ),
+                            "body" => json_encode(
+                                array(
+                                    "text" => $item->content
+                                )
                             )
                         ));
+
                     } catch (ClientException $e) {
+                        $this->error($e->getMessage());
                         $item->status = Items::STATUS_CONVERSION_FAILED;
                         $item->save();
                         continue;
@@ -74,24 +84,40 @@ class ConvertToSpeech extends Command {
 
 
                     if (substr($response->getStatusCode(), 0, 1) == "2") {
-                        $filename = sprintf(static::FILENAME_FORMAT, $item->id);
+                        $filename = sprintf(static::FILENAME_FORMAT_OGG, $item->id);
 
                         $filesystem->put(
                             $filename,
                             $response->getBody()
                         );
 
+                        // Convert ogg file to mp3.
+                        $output = '';
+                        $returnCode = -1;
+                        $origPath = storage_path() . "/app/$filename";
+                        $finalPath = storage_path() . "/app/" . sprintf(static::FILENAME_FORMAT_MP3, $item->id);
+
+                        exec("ffmpeg -i $origPath -acodec libmp3lame $finalPath 2> /dev/null", $output, $returnCode);
+
+                        if ($returnCode !== 0) {
+                            $this->error('Error converting .ogg to .mp3');
+                            $item->status = Items::STATUS_CONVERSION_FAILED;
+                            $item->save();
+                        }
+
+                        // Remove original ogg file
+                        $filesystem->delete($filename);
+
                         $item->status = Items::STATUS_CONVERTED;
                         $item->save();
 
-                        printf("Done (%s).\n", $filename);
+                        $this->info(sprintf("Done (%s).", $filename));
 
-                    } else {
-                        printf("Failed!\n");
-                        
-                        $item->status = tems::STATUS_CONVERSION_FAILED;
-                        $item->save();
                     }
+
+                    $item->status = Items::STATUS_CONVERSION_FAILED;
+                    $item->save();
+                    $this->error('Failed!');
                 }
             });
 	}

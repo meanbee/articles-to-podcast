@@ -55,6 +55,9 @@ class ItemsController extends BaseController
             } catch (RequestException $e) {
                 // Something went wrong requesting the URL given. So give the error to the user.
                 return \Redirect::back()->withInput()->withErrors(['url' => $e->getMessage()]);
+            } catch (\Exception $e) {
+                // Likely threw our own exception
+                return \Redirect::back()->withInput()->withErrors(['error' => $e->getMessage()]);
             }
         }
 
@@ -74,6 +77,10 @@ class ItemsController extends BaseController
         $goose = new GooseClient();
         $article = $goose->extractContent($url);
         $articleText = $article->getCleanedArticleText();
+
+        if (!$articleText) {
+            throw new \Exception('Unable to find article for URL');
+        }
 
         $item = new Items();
         $item->id = md5($url);

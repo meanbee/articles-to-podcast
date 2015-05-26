@@ -8,7 +8,7 @@ class User extends Model  {
 
     public function items()
     {
-        return $this->hasMany('App\UserItems');
+        return $this->hasManyThrough('App\Items', 'App\UserItems', 'item_id', 'id');
     }
 
     public function secret()

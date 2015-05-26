@@ -20,7 +20,7 @@ class ItemsController extends BaseController
 
     public function index()
     {
-        $items = $this->user()->items()->get();
+        $items = $this->auth->getUser()->items()->get();
         return view('items.index', compact('items'));
     }
 
@@ -62,7 +62,7 @@ class ItemsController extends BaseController
         $user_item = UserItems::find(md5($url));
         if ($user_item == null) {
             $user_item = new UserItems();
-            $user_item->user_id = $this->user()->id;
+            $user_item->user_id = $this->auth->getUser()->id;
             $user_item->item_id = $item->id;
             $user_item->save();
         }
@@ -119,13 +119,4 @@ class ItemsController extends BaseController
     {
         //
     }
-
-    /**
-     * @return \App\User
-     */
-    protected function user()
-    {
-        return \Auth::user();
-    }
-
 }

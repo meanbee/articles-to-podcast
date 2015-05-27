@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Items;
 use App\UserItems;
+use \Session;
 use Goose\Client as GooseClient;
 use Illuminate\Http\Request;
 use \GuzzleHttp\Exception\RequestException;
@@ -57,7 +57,8 @@ class ItemsController extends BaseController
                 return \Redirect::back()->withInput()->withErrors(['url' => $e->getMessage()]);
             } catch (\Exception $e) {
                 // Likely threw our own exception
-                return \Redirect::back()->withInput()->withErrors(['error' => $e->getMessage()]);
+                Session::flash('error', $e->getMessage());
+                return \Redirect::back();
             }
         }
 

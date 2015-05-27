@@ -14,9 +14,9 @@
         @foreach ($items as $item)
             <item>
                 <enclosure url="https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ $item->id }}.mp3" type="audio/mpeg" />
-                <title>Item '{{ $item->id }}'</title>
+                <title>Item '{{ $item->title }}'</title>
                 <link>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ $item->id }}.mp3</link>
-                <description>{{ $item->id }}</description>
+                <description>{{ $item->excerpt }}</description>
                 <pubDate>{{ date(DATE_RFC2822) }}</pubDate>
                 <guid>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ $item->id }}.mp3</guid>
             </item>

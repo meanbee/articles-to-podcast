@@ -59,12 +59,15 @@ class ConvertToSpeech extends Command {
                     $item->status = Items::STATUS_BEING_CONVERTED;
                     $item->save();
 
-                    $this->info(sprintf("Converting content of '%s'...", $item->url));
+                    $this->info(sprintf("Converting content of '%s' to speech...", $item->url));
 
                     try {
                         $response = $this->getHttpClient()->post("v1/synthesize", array(
+                            "auth" => array(
+                                env('WATSON_TTS_USERNAME'),
+                                env('WATSON_TTS_PASSWORD')
+                            ),
                             "headers" => array(
-                                'Authorization' => 'Basic ' . base64_encode(env('WATSON_TTS_USERNAME') . ':' . env('WATSON_TTS_PASSWORD')),
                                 'Content-Type'  => 'application/json',
                                 'Accept'        => 'audio/ogg; codecs=opus'
                             ),
@@ -76,48 +79,54 @@ class ConvertToSpeech extends Command {
                         ));
 
                     } catch (ClientException $e) {
-                        $this->error($e->getMessage());
                         $item->status = Items::STATUS_CONVERSION_FAILED;
                         $item->save();
+                        $this->error($e->getMessage());
                         continue;
                     }
 
 
-                    if (substr($response->getStatusCode(), 0, 1) == "2") {
-                        $filename = sprintf(static::FILENAME_FORMAT_OGG, $item->id);
-
-                        $filesystem->put(
-                            $filename,
-                            $response->getBody()
-                        );
-
-                        // Convert ogg file to mp3.
-                        $output = '';
-                        $returnCode = -1;
-                        $origPath = storage_path() . "/app/$filename";
-                        $finalPath = storage_path() . "/app/" . sprintf(static::FILENAME_FORMAT_MP3, $item->id);
-
-                        exec("ffmpeg -i $origPath -acodec libmp3lame $finalPath 2> /dev/null", $output, $returnCode);
-
-                        if ($returnCode !== 0) {
-                            $this->error('Error converting .ogg to .mp3');
-                            $item->status = Items::STATUS_CONVERSION_FAILED;
-                            $item->save();
-                        }
-
-                        // Remove original ogg file
-                        $filesystem->delete($filename);
-
-                        $item->status = Items::STATUS_CONVERTED;
+                    if (substr($response->getStatusCode(), 0, 1) != "2") {
+                        $item->status = Items::STATUS_CONVERSION_FAILED;
                         $item->save();
-
-                        $this->info(sprintf("Done (%s).", $filename));
-
+                        $this->error('Invalid response from watson TTS API!');
+                        continue;
                     }
 
-                    $item->status = Items::STATUS_CONVERSION_FAILED;
+
+                    // Save successful response
+                    $filenameOgg = sprintf(static::FILENAME_FORMAT_OGG, $item->id);
+                    $filenameMp3 = sprintf(static::FILENAME_FORMAT_MP3, $item->id);
+
+                    $filesystem->put(
+                        $filenameOgg,
+                        $response->getBody()
+                    );
+
+                    $this->info('Downloaded, converting ogg to mp3...');
+
+                    $output = '';
+                    $returnCode = -1;
+                    $origPath = storage_path() . "/app/$filenameOgg";
+                    $finalPath = storage_path() . "/app/$filenameMp3";
+
+                    exec("ffmpeg -y -i $origPath -acodec libmp3lame $finalPath 2> /dev/null", $output, $returnCode);
+
+                    if ($returnCode !== 0) {
+                        $item->status = Items::STATUS_CONVERSION_FAILED;
+                        $item->save();
+                        $this->error("Error converting $filenameOgg to $filenameMp3");
+                        continue;
+                    }
+
+                    // Remove original ogg file
+                    $filesystem->delete($filenameOgg);
+
+                    $item->status = Items::STATUS_CONVERTED;
                     $item->save();
-                    $this->error('Failed!');
+
+                    $this->info(sprintf("Done (%s).", $filenameMp3));
+
                 }
             });
 	}

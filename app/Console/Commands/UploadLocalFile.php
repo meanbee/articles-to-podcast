@@ -41,7 +41,7 @@ class UploadLocalFile extends Command {
 		$items_to_upload = Items::where('status', '=', Items::STATUS_CONVERTED)
 			->chunk(100, function ($items) {
 				foreach ($items as $item) {
-					$local_file = $item->id . '.mp3';
+					$local_file = md5($item->url) . '.mp3';
 
 					$item->status = Items::STATUS_BEING_UPLOADED;
 					$item->save();

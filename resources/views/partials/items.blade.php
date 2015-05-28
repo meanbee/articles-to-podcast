@@ -7,7 +7,7 @@
     </thead>
 @foreach($items as $item)
     <tr>
-        <td><a href="{{$item->url }}">{{ $item->item()->title }}</td>
+        <td><a href="{{$item->item->url }}">{{ $item->item->title }}</td>
         <td>{{ $item->createdAt() }}</td>
     </tr>
 @endforeach

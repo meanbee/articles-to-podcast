@@ -9,7 +9,7 @@ class FeedController extends BaseController {
     {
         /** @var \App\User $user */
         $user = User::find($id);
-        $items = $user->items()->get()->all();
+        $items = $user->items();
         $calculated_secret = $user->secret();
 
         if ($secret !== $calculated_secret) {

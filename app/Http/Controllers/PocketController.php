@@ -4,6 +4,7 @@ use Session;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use \App\Services\Pocket;
 
 class PocketController extends BaseController {
 
@@ -107,6 +108,9 @@ class PocketController extends BaseController {
         $json = $response->json();
 
         $this->auth->login($json['username'], $json['access_token']);
+
+        $pocket = new Pocket($this->auth->getUser());
+        $pocket->synchronisePocketItems();
 
         return redirect('/dashboard');
     }

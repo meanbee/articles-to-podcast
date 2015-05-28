@@ -16,9 +16,7 @@ class DashboardController extends BaseController {
 	 */
 	public function index()
 	{
-
-        var_dump($this->auth->getUser()->items()); exit;
-        $items = $this->auth->getUser()->items()->get();
+        $items = $this->auth->getUser()->userItems;
 
 		return view('dashboard', array(
 			'user' => $this->auth->getUser(),

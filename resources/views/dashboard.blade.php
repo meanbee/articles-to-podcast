@@ -8,7 +8,6 @@
 		To subscribe to your podcast, <a href="{{ str_replace('http://', 'itpc://', route('podcast', array('id' => $user->id, 'secret' => $user->secret()))) }}">click here</a>.
 	</p>
 
-    <?php echo var_dump($items); ?>
     @include('partials.items', array('items' => $items))
 </section>
 @endsection

@@ -25,8 +25,8 @@ class Kernel extends ConsoleKernel {
 	protected function schedule(Schedule $schedule)
 	{
         $schedule->command('pocket:synchronise')->hourly();
-		$schedule->command('articles:convert')->cron('15 * * * * *');
-        $schedule->command('articles:upload')->cron('30 * * * * *');
+		$schedule->command('articles:convert')->cron('*/15 * * * * *');
+        $schedule->command('articles:upload')->cron('*/15 * * * * *');
 	}
 
 }

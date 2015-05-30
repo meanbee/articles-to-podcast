@@ -24,15 +24,16 @@ class ContentExtractor {
     {
         $goose = new GooseClient();
 
+        $articleText = '';
+
         try {
             $article = $goose->extractContent($url);
             $articleText = $article->getCleanedArticleText();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return '';
         }
 
-        if (!$articleText) {
+        if (!$articleText && $article) {
             // If Goose failed, try Readability
             $html = $article->getRawHtml();
 

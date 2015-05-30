@@ -28,7 +28,9 @@ class Pocket {
     }
 
     /**
-     * Add latest pock
+     * Add latest pocket items for user
+     * Remove any that have been read
+     * Delete items that aren't in any user's list
      *
      * @throws \Exception
      */
@@ -40,14 +42,24 @@ class Pocket {
         $urls = array();
         foreach ($feed as $feedItem) {
             $item = $this->addItem($feedItem['resolved_url'], $feedItem['resolved_title'], $feedItem['excerpt']);
-            if ($item) {
-                $this->addUserItem($item);
-                $urls[] = $feedItem['resolved_url'];
-            }
+            $userItem = $this->addUserItem($item, $feedItem);
+            $urls[] = $feedItem['resolved_url'];
         }
 
         // Remove previous items which are no longer in the feed
-        $affectedRows = UserItemsModel::whereNotIn('item_id', array_map("md5", $urls))->delete();
+        $readItems = UserItemsModel::whereNotIn('item_id', array_map("md5", $urls))
+            ->where('user_id', '=', $this->user->id)
+            ->delete();
+
+        // Check whether items need to be deleted from items table if no users attached
+        $hangingItems = \DB::table('items')
+            ->whereNotExists(function($query)
+            {
+                $query->select()
+                    ->from('user_items')
+                    ->whereRaw('user_items.item_id = items.id');
+            })
+            ->delete();
     }
 
 
@@ -92,6 +104,7 @@ class Pocket {
             } elseif($statusCode == 500) {
                 Log::error('Pocket server issue');
             }
+            return array();
         }
 
         $feed = $response->json();
@@ -103,39 +116,47 @@ class Pocket {
      * Add user item row for an item if it doesn't already exist
      *
      * @param $item
+     * @param $pocketItem
      */
-    protected function addUserItem($item) {
+    protected function addUserItem($item, $pocketItem) {
         $userItem = UserItemsModel::where('user_id', '=', $this->user->id)
             ->where('item_id', '=', $item->id)
             ->limit(1)
             ->get()
             ->first();
 
-        if ($userItem == null) {
+        if (is_null($userItem)) {
             $userItem = new UserItemsModel();
             $userItem->user_id = $this->user->id;
             $userItem->item_id = $item->id;
+            $userItem->created_at = date('Y-m-d H:i:s', $pocketItem['time_added']);
+            $userItem->updated_at = date('Y-m-d H:i:s', $pocketItem['time_updated']);
             $userItem->save();
         }
     }
 
+    /**
+     * Add new item without fetching article content yet
+     *
+     * @param      $url
+     * @param null $title
+     * @param null $excerpt
+     *
+     * @return ItemModel|\Illuminate\Support\Collection|null|void|static
+     */
     protected function addItem($url, $title = null, $excerpt = null)
     {
-        if (ItemModel::find(md5($url))) {
-            return ItemModel::find(md5($url));
-        }
-
-        if (!$articleText = $this->getArticleContent($url)) {
-            Log::error('Unable to find article for URL: ' . $url);
+        if ($item = ItemModel::find(md5($url))) {
+            return $item;
         }
 
         $item = new ItemModel();
         $item->id = md5($url);
         $item->url = $url;
-        $item->content = $this->replace4byte($articleText);
         $item->title = $this->replace4byte($title);
+        $item->content = '';
         $item->excerpt = $this->replace4byte(substr($excerpt, 0, 255));
-        $item->status = ItemModel::STATUS_FETCHED;
+        $item->status = ItemModel::STATUS_NEW;
         $item->save();
 
         return $item;

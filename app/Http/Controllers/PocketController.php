@@ -23,6 +23,9 @@ class PocketController extends BaseController {
 
     public function login()
     {
+
+        Session::forget('pocket_code');
+
         $client = new Client;
 
         try {
@@ -72,7 +75,8 @@ class PocketController extends BaseController {
         return redirect(self::POCKET_AUTHORIZE . '?' . $params);
     }
 
-    public function loginResponse() {
+    public function loginResponse()
+    {
 
         $client = new Client;
 
@@ -103,12 +107,22 @@ class PocketController extends BaseController {
             } elseif ($statusCode == 500) {
                 Log::error('Pocket server issue');
             }
+
+            return redirect('/');
         }
 
         $json = $response->json();
 
         $this->auth->login($json['username'], $json['access_token']);
+        
+        return redirect('/dashboard');
+    }
 
+    /**
+     *
+     */
+    public function synchronise()
+    {
         $pocket = new Pocket($this->auth->getUser());
         $pocket->synchronisePocketItems();
 

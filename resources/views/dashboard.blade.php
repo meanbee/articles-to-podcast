@@ -5,9 +5,15 @@
     <h2>Dashboard</h2>
 
 	<p>
-		To subscribe to your podcast, <a href="{{ str_replace('http://', 'itpc://', route('podcast', array('id' => $user->id, 'secret' => $user->secret()))) }}">click here</a>.
+        <a href="{{ str_replace('http://', 'itpc://', route('podcast', array('id' => $user->id, 'secret' => $user->secret()))) }}">Subscribe to your podcast</a>.
 	</p>
 
-    @include('partials.items', array('items' => $items))
+    <p>
+        <a href="{{ route('pocket.synchronise') }}">Synchronise with Pocket</a>
+    </p>
+
+    @if (count($items) > 0)
+        @include('partials.items', array('items' => $items))
+    @endif
 </section>
 @endsection

@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
         'App\Console\Commands\ConvertToSpeech',
+        'App\Console\Commands\FetchContent',
 		'App\Console\Commands\PocketSynchronise',
 		'App\Console\Commands\UploadLocalFile',
 	];
@@ -24,9 +25,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('pocket:synchronise')->hourly();
-		$schedule->command('articles:convert')->cron('*/15 * * * * *');
-        $schedule->command('articles:upload')->cron('*/15 * * * * *');
+        $schedule->command('run:all')->hourly()->withoutOverlapping();;
 	}
 
 }

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel {
         'App\Console\Commands\ConvertToSpeech',
         'App\Console\Commands\FetchContent',
 		'App\Console\Commands\PocketSynchronise',
+		'App\Console\Commands\RunAll',
 		'App\Console\Commands\UploadLocalFile',
 	];
 

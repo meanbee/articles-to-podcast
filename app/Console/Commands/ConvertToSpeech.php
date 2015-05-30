@@ -4,8 +4,6 @@ use App\Items;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
 class ConvertToSpeech extends Command {
 

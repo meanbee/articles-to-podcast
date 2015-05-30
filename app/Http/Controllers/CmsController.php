@@ -9,6 +9,10 @@ class CmsController extends BaseController {
 	 */
 	public function index()
 	{
+        if ($this->auth->check()) {
+            return redirect('/dashboard');
+        }
+        
 		return view('cms.home');
 	}
 

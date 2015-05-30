@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
         'App\Console\Commands\ConvertToSpeech',
-		'App\Console\Commands\Inspire',
+        'App\Console\Commands\FetchContent',
+		'App\Console\Commands\PocketSynchronise',
 		'App\Console\Commands\UploadLocalFile',
 	];
 
@@ -24,8 +25,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('articles:convert')->hourly();
-        $schedule->command('articles:upload')->cron('10 * * * * *');
+        $schedule->command('run:all')->hourly()->withoutOverlapping();;
 	}
 
 }

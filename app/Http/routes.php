@@ -23,5 +23,6 @@ Route::get('podcast/{id}/{secret}', ['as' => 'podcast', 'uses' => 'FeedControlle
 
 Route::get('pocket/login', ['as' => 'pocket.login', 'uses' => 'PocketController@login']);
 Route::get('pocket/login/response', ['as' => 'pocket.response', 'uses' => 'PocketController@loginResponse']);
+Route::get('pocket/synchronise', ['as' => 'pocket.synchronise', 'uses' => 'PocketController@synchronise']);
 
 Route::resource('items', 'ItemsController');

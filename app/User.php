@@ -8,7 +8,16 @@ class User extends Model  {
 
     public function items()
     {
-        return $this->hasManyThrough('App\Items', 'App\UserItems', 'item_id', 'id');
+        return \DB::table('items')
+                ->join('user_items', 'items.id', '=', 'user_items.item_id')
+                ->join('users', 'user_items.user_id', '=', 'users.id')
+                ->where('users.id', '=', $this->id)
+                ->get();
+    }
+
+    public function userItems()
+    {
+        return $this->hasMany('App\UserItems', 'user_id', 'id');
     }
 
     public function secret()

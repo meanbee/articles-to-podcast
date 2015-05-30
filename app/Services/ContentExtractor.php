@@ -64,6 +64,8 @@ class ContentExtractor {
 
     /**
      * Replace utf8mb4 with utf8
+     * Emoticons aren't valid in mysql utf8, hence the stripping
+     * 
      * @param $string
      *
      * @return mixed

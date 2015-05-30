@@ -9,9 +9,12 @@ class Items extends Model {
     const STATUS_FETCHED           = 'fetched';
     const STATUS_BEING_CONVERTED   = 'being_converted';
     const STATUS_CONVERTED         = 'converted';
-    const STATUS_CONVERSION_FAILED = 'conversion_failed';
     const STATUS_BEING_UPLOADED    = 'being_uploaded';
     const STATUS_UPLOADED          = 'uploaded';
+
+    const STATUS_FETCH_FAILED      = 'fetch_failed';
+    const STATUS_CONVERSION_FAILED = 'conversion_failed';
+
 
     public $incrementing = false;
     public $timestamps = false;

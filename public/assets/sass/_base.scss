@@ -162,6 +162,7 @@ iframe {
     font-family: $avenirBlack;
     margin: 1em 0;
     padding: 1em 2em;
+    text-decoration: none;
     text-transform: uppercase;
     @include transition(all 0.2s ease-in-out);
 

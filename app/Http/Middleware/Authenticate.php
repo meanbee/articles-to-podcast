@@ -33,7 +33,7 @@ class Authenticate {
 			}
 			else
 			{
-                Session::put('error', 'Please login to reach this page.');
+                Session::flash('error', 'Please login to reach this page.');
 				return redirect('/');
 			}
 		}

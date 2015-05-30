@@ -153,9 +153,9 @@ class Pocket {
         $item = new ItemModel();
         $item->id = md5($url);
         $item->url = $url;
-        $item->title = $this->replace4byte($title);
+        $item->title = $title;
         $item->content = '';
-        $item->excerpt = $this->replace4byte(substr($excerpt, 0, 255));
+        $item->excerpt = substr($excerpt, 0, 255);
         $item->status = ItemModel::STATUS_NEW;
         $item->save();
 

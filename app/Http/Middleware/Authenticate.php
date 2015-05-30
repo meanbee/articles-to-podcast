@@ -2,6 +2,7 @@
 
 use Closure;
 use App\Auth;
+use \Session;
 
 class Authenticate {
 

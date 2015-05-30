@@ -1,7 +1,7 @@
 <table>
     <thead>
     <tr>
-        <th>Item</th>
+        <th>Article</th>
         <th>Created at</th>
     </tr>
     </thead>

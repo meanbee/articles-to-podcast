@@ -4,7 +4,7 @@ use Illuminate\Console\Command;
 use \Log;
 use \Artisan;
 
-class FetchContent extends Command {
+class RunAll extends Command {
 
     /**
      * The console command name.

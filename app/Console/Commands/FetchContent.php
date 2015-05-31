@@ -57,7 +57,7 @@ class FetchContent extends Command {
                     $item->status = Items::STATUS_FETCHED;
                     $item->save();
                 } else {
-                    Log::error('Unable to find content for ' . $item->$url);
+                    Log::error('Unable to find content for ' . $item->url);
                     $item->status = Items::STATUS_FETCH_FAILED;
                     $item->save();
                 }

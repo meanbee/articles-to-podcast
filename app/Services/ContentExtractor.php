@@ -33,7 +33,7 @@ class ContentExtractor {
             Log::error($e->getMessage());
         }
 
-        if (!$articleText && $article) {
+        if (!$articleText && isset($article)) {
             // If Goose failed, try Readability
             $html = $article->getRawHtml();
 

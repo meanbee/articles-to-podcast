@@ -6,12 +6,6 @@ use \Log;
 
 class ContentExtractor {
 
-
-    /**
-     * @var \GuzzleHttp\Client $httpClient
-     */
-    protected $httpClient;
-
     /**
      * Find text from URL
      * First try Goose, then try Readability
@@ -43,7 +37,8 @@ class ContentExtractor {
                 $html = $tidy->value;
             }
 
-            $readability = new Readability($html, $url);
+            $readability = new Readability($html);
+
             $readability->debug = false;
             $result = $readability->init();
 
@@ -77,20 +72,5 @@ class ContentExtractor {
         | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
         | \xF4[\x80-\x8F][\x80-\xBF]{2}      # plane 16
         )%xs', '', $string);
-    }
-
-
-    /**
-     * Get the http client.
-     *
-     * @return \GuzzleHttp\Client
-     */
-    protected function getHttpClient()
-    {
-        if (!$this->httpClient) {
-            $this->httpClient = new \GuzzleHttp\Client(array("base_url" => static::POCKET_API_URL));
-        }
-
-        return $this->httpClient;
     }
 }

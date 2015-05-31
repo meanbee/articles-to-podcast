@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('run:all')->hourly()->withoutOverlapping();;
+        $schedule->command('pocket:synchronise')->daily()->withoutOverlapping();
+        $schedule->command('article:run-all')->everyTenMinutes()->withoutOverlapping();
 	}
-
 }

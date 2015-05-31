@@ -11,14 +11,14 @@ class RunAll extends Command {
      *
      * @var string
      */
-    protected $name = 'run:all';
+    protected $name = 'articles:run-all';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Run through synchronise articles, fetch content, convert to speech and upload to S3 processes';
+    protected $description = 'Run through full process for an article: fetch content, convert to speech and upload to S3 processes';
 
     /**
      * Create a new command instance.
@@ -37,9 +37,6 @@ class RunAll extends Command {
      */
     public function fire()
     {
-        $this->info('Synchronising pocket articles for users');
-        Artisan::call('pocket:synchronise');
-
         $this->info('Fetching article contents');
         Artisan::call('articles:fetch');
 

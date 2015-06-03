@@ -15,5 +15,4 @@
 </section>
 @stop
 @section('before_body_end')
-
 @stop

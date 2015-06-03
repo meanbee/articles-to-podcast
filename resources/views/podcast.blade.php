@@ -20,14 +20,16 @@
         </image>
 
     @foreach ($items as $item)
-            <item>
-                <enclosure url="https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3" type="audio/mpeg" length="1" />
-                <title><![CDATA[{{ html_entity_decode($item->title) }}]]></title>
-                <link>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</link>
-                <description><![CDATA[{{ html_entity_decode($item->excerpt) }}]]></description>
-                <pubDate>{{ date(DATE_RFC2822) }}</pubDate>
-                <guid>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</guid>
-            </item>
+            @if (file_exists(storage_path() . "/app/" . md5($item->url) . ".mp3"))
+                <item>
+                    <enclosure url="https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3" type="audio/mpeg" length="{{ filesize(storage_path() . "/app/" . md5($item->url) . ".mp3") }}" />
+                    <title><![CDATA[{{ $item->title }}]]></title>
+                    <link>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</link>
+                    <description><![CDATA[{{ $item->excerpt }}]]></description>
+                    <pubDate>{{ date(DATE_RFC2822) }}</pubDate>
+                    <guid>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</guid>
+                </item>
+            @endif
         @endforeach
     </channel>
 </rss>

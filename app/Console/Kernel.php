@@ -26,7 +26,14 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $schedule->command('pocket:synchronise')->daily()->withoutOverlapping();
-        $schedule->command('article:run-all')->everyTenMinutes()->withoutOverlapping();
+        /**
+         * This is what we would like to run but Heroku cron on the free plan only runs every 10 minutes.
+         * If the minute that it runs doesn't exactly pass the regular expression for our commands (e.g on the stroke of
+         * midnight and every 10 minutes past the hour), then our commands will never run.
+         * For that reason these have been commented out and moved to the cron schedule.  They remain here for future
+         * use and for documentation on what commands need to be regularly run.
+         */
+        //$schedule->command('pocket:synchronise')->daily()->withoutOverlapping();
+        //$schedule->command('article:run-all')->everyTenMinutes()->withoutOverlapping();
 	}
 }

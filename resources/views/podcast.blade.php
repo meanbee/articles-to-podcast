@@ -1,7 +1,7 @@
 <?php echo '<?xml version="1.0"?>'; ?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
     <channel>
-        <title>{{ $user->username }}'s Articles</title>
+        <title>Pocket</title>
         <link>http://articles2podcast.herokuapp.com</link>
         <description>{{ $user->username }}'s articles, converted into speech.</description>
         <language>en-gb</language>
@@ -15,7 +15,7 @@
         <itunes:explicit>no</itunes:explicit>
         <image>
             <url>{{ asset('assets/images/pocket-logo-large.jpg') }}</url>
-            <title>{{ $user->username }}'s Articles</title>
+            <title>Pocket</title>
             <link>http://articles2podcast.herokuapp.com</link>
         </image>
 

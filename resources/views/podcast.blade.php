@@ -19,13 +19,15 @@
             <link>http://articles2podcast.herokuapp.com</link>
         </image>
 
-    @foreach ($items as $item)
+    @foreach ($userItems as $userItem)
+            <?php $item = $userItem->item ?>
+
             <item>
-                <enclosure url="https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3" type="audio/mpeg" length="1" />
+                <enclosure url="https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3" type="audio/mpeg" length="{{ $item->byte_length }}" />
                 <title><![CDATA[{{ $item->title }}]]></title>
                 <link>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</link>
                 <description><![CDATA[{{ $item->excerpt }}]]></description>
-                <pubDate>{{ date(DATE_RFC2822) }}</pubDate>
+                <pubDate>{{ $userItem->updated_at }}</pubDate>
                 <guid>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</guid>
             </item>
         @endforeach

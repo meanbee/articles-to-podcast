@@ -120,6 +120,7 @@ class ConvertToSpeech extends Command {
                     // Remove original ogg file
                     $filesystem->delete($filenameOgg);
 
+                    $item->byte_length = filesize($finalPath);
                     $item->status = Items::STATUS_CONVERTED;
                     $item->save();
 

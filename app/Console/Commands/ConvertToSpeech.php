@@ -124,6 +124,23 @@ class ConvertToSpeech extends Command {
                     $item->status = Items::STATUS_CONVERTED;
                     $item->save();
 
+                    $item->status = Items::STATUS_BEING_UPLOADED;
+                    $item->save();
+
+                    printf("Uploading '%s'..", $filenameMp3);
+
+                    $s3 = \Storage::disk('s3');
+                    $local = \Storage::disk('local');
+
+                    $s3->put($filenameMp3, $local->get($filenameMp3));
+
+                    printf("Done.\n");
+
+                    $item->status = Items::STATUS_UPLOADED;
+                    $item->save();
+
+                    $local->delete($filenameMp3);
+
                     $this->info(sprintf("Done (%s).", $filenameMp3));
 
                 }

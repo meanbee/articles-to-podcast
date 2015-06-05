@@ -108,7 +108,7 @@ class ConvertToSpeech extends Command {
                     $origPath = storage_path() . "/app/$filenameOgg";
                     $finalPath = storage_path() . "/app/$filenameMp3";
 
-                    exec("avconv -y -i $origPath -acodec libmp3lame $finalPath 2> /dev/null", $output, $returnCode);
+                    exec("avconv -y -i $origPath -acodec libmp3lame $finalPath", $output, $returnCode);
 
                     if ($returnCode !== 0) {
                         $item->status = Items::STATUS_CONVERSION_FAILED;

@@ -27,7 +27,7 @@
                 <title><![CDATA[{{ $item->title }}]]></title>
                 <link>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</link>
                 <description><![CDATA[{{ $item->excerpt }}]]></description>
-                <pubDate>{{ $userItem->updated_at }}</pubDate>
+                <pubDate>{{ date(DATE_RFC2822, strtotime($userItem->updated_at)) }}</pubDate>
                 <guid>https://s3-eu-west-1.amazonaws.com/articles-to-podcast/{{ md5($item->url) }}.mp3</guid>
             </item>
         @endforeach

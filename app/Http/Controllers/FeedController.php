@@ -14,10 +14,10 @@ class FeedController extends BaseController {
             throw new \Exception("Secret mismatch");
         }
 
-        return view('podcast', array(
+        return response()->view('podcast', array(
             'user'  => $user,
             'userItems' => $user->userItems->sortByDesc('updated_at'),
-        ));
+        ))->header('Content-Type', 'application/xml');
     }
 
 }

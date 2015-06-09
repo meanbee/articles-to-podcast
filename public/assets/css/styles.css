@@ -59,7 +59,9 @@ a{color:#231f20}
 a:focus,a:hover{text-decoration:underline}
 fieldset{border:0;margin:0;padding:0}
 select{width:100%}
-ol,ul{list-style:none;margin:0;padding:0}
+ul{list-style:none;margin:0;padding:0}
+li{padding:.3em 0}
+ol{list-style:none;margin:0;padding:0}
 dd{margin:0}
 abbr{cursor:help}
 strong{font-weight:700}

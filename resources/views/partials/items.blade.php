@@ -1,14 +1,7 @@
-<table>
-    <thead>
-    <tr>
-        <th>Article</th>
-        <th>Created at</th>
-    </tr>
-    </thead>
+<ul>    
 @foreach($items as $item)
-    <tr>
-        <td><a href="{{$item->item->url }}">{{ $item->item->title }}</td>
-        <td>{{ $item->createdAt() }}</td>
-    </tr>
+    <li>
+        <a href="{{$item->item->url }}">{{ $item->item->title }}</td>
+    </li>
 @endforeach
-</table>
+</ul>

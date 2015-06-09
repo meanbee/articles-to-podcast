@@ -6,4 +6,4 @@ We had a backlog of articles bookmarked in [pocket](getpocket.com) and were stru
 Here-in lies a service to convert all unread articles in a users pocket queue to a podcast.  The text to speech 
 conversion is handled by [IBM Watson](http://www.ibm.com/smarterplanet/us/en/ibmwatson/).
 
-[Demo](articles2podcast.herokuapp.com).
+[Demo](http://articles2podcast.herokuapp.com).

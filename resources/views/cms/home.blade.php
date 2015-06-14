@@ -6,7 +6,7 @@
 @section('content')
 <section class="main-inner">
     <div class="pocket-login-promo">
-        <h2>Pocket Podcast</h2>
+        <h1>Pocket Podcast</h1>
         <p>Subscribe to a podcast of your pocket articles and listen on the go!</p>
         @if(!$auth->check() )
             <a href="{{ url('/pocket/login') }}" class="pocket-login">Login with<span class="pocket-logo">Pocket</span></a>

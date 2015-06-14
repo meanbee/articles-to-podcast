@@ -1,0 +1,42 @@
+.pocket-login-promo {
+
+    @include modular-bp(em(700)) {
+        display: inline-block;
+        margin: 4em 0;
+        text-align: center;
+        vertical-align: top;
+        width: 50%;
+    }
+}
+
+.pocket-login {
+    display: block;
+    margin: 2em 0;
+    text-align: center;
+}
+
+.iphone-screenshot {
+    background: url('../images/iphone5.png') no-repeat top left;
+    margin: 0 auto;
+    padding: 5.2em 1.5em;
+    width: 271px;
+    height: 633px;
+
+    @include modular-bp(em(700)) {
+        display: inline-block;
+        margin: 1em 0 1em 10%;
+        vertical-align: top;
+        min-width: 271px;
+        width: 30%;
+    }
+}
+
+.audio-sample {
+    margin: 1em 0;
+    vertical-align: middle;
+}
+
+.audio-sample-controls {
+    vertical-align: middle;
+}
+

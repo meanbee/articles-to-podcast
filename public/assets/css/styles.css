@@ -84,13 +84,18 @@ header[role=banner] nav[role=navigation] li{display:inline-block;padding:.5em 1e
 @media only screen and (min-width:50em){header[role=banner] nav[role=navigation] li{padding:.5em 2em}}
 .footer-inner,.header-inner,.main-inner{max-width:63.75em;margin-left:auto;margin-right:auto;padding:1em 1em 0}
 .footer-inner:after,.header-inner:after,.main-inner:after{content:"";display:table;clear:both}
+.header-inner{padding-top:0}
 .main-inner{margin-bottom:4em;text-align:justify}
 footer[role=contentinfo]{background:rgba(240,234,228,.4);color:#231f20;min-height:8.75em}
 footer[role=contentinfo] h4{color:#fff}
 footer[role=contentinfo] [type=submit]{padding:.5em}
 footer[role=contentinfo] [type=submit]:hover{background:#fff;color:#2f4aa0}
 footer[role=contentinfo] [type=text],footer[role=contentinfo] [type=email]{padding:.4em .2em .3em}
-.pocket-login-promo{text-align:center;margin:4em}
+@media only screen and (min-width:43.75em){.pocket-login-promo{display:inline-block;margin:4em 0;text-align:center;vertical-align:top;width:50%}}
 .pocket-login{display:block;margin:2em 0;text-align:center}
+.iphone-screenshot{background:url(../images/iphone5.png) top left no-repeat;margin:0 auto;padding:5.2em 1.5em;width:271px;height:633px}
+@media only screen and (min-width:43.75em){.iphone-screenshot{display:inline-block;margin:1em 0 1em 10%;vertical-align:top;min-width:271px;width:30%}}
+.audio-sample{margin:1em 0;vertical-align:middle}
+.audio-sample-controls{vertical-align:middle}
 .logo{background:url(../images/articlecast.jpg) top left no-repeat;display:block;height:114px;margin:.875em auto;text-indent:-99999px;width:300px}
 .pocket-logo{background:url(../images/pocket-logo.png) center left no-repeat;background-size:150px 38.5px;margin-left:10px;padding:19.25px 75px;display:inline-block;text-indent:-9999px}

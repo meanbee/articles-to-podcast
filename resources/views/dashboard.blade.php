@@ -9,7 +9,7 @@
         <a class="subscribe-link" href="{{ route('podcast', array('id' => $user->id, 'secret' => $user->secret())) }}">Subscribe with RSS</a>
     </div>
 
-    <p>Articles are automatically fetched, convert to podcast episodes and added to your feed every hour.</p>
+    <p>Most recent 20 unread articles are automatically fetched, convert to podcast episodes and added to your feed every hour.</p>
     <p>Once you've listened to them, you'll need to manually mark them as read in <a href="http://getpocket.com">Pocket</a>.</p>
 
     @if (count($items) > 0)

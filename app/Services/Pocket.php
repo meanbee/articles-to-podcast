@@ -83,7 +83,8 @@ class Pocket {
                         "contentType"  => "article",
                         "status"       => "unread",
                         "sort"         => "newest",
-                        "detailType"   => "simple"
+                        "detailType"   => "simple",
+                        "count"        => 20
                     )
                 )
             ));
